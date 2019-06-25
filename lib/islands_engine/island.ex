@@ -9,11 +9,10 @@ defmodule IslandsEngine.Island do
 
    %Island{coordinates: MapSet.new(coordinates), hit_coordinates: MapSet.new()}
   end
-  defp generate_coordinates(:dot, row, col) do
-    [elem(Coordinate.new(row, col), 1)]
+  defp generate_coordinates(island_type, top_row, left_col) do
+    offsets(island_type)
+    |>  Enum.map(fn({row_offset, col_offset}) -> elem(Coordinate.new(top_row + row_offset, left_col + col_offset), 1) end)
   end
-  defp generate_coordinates(:square, top_row, left_col) do
-    [{top_row, left_col}, {top_row, left_col + 1}, {top_row + 1, left_col}, {top_row + 1, left_col + 1}]
-    |>  Enum.map(fn({row, col}) -> elem(Coordinate.new(row, col), 1) end)
-  end
+  defp offsets(:square), do: [{0,0},{0,1},{1,0},{1,1}]
+  defp offsets(:dot), do: [{0,0}]
 end
