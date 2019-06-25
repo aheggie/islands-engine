@@ -11,8 +11,11 @@ defmodule IslandsEngine.Island do
   end
   defp generate_coordinates(island_type, top_row, left_col) do
     offsets(island_type)
-    |>  Enum.map(fn({row_offset, col_offset}) -> elem(Coordinate.new(top_row + row_offset, left_col + col_offset), 1) end)
+    |>  Enum.map(fn({row_offset, col_offset}) -> Coordinate.new(top_row + row_offset, left_col + col_offset) end)
   end
-  defp offsets(:square), do: [{0,0},{0,1},{1,0},{1,1}]
+  defp offsets(:atoll), do: [{0,0},{0,1},{1,1},{2,0},{2,1}]
   defp offsets(:dot), do: [{0,0}]
+  defp offsets(:l_shape), do: [{0,0},{1,0},{2,0},{2,1}]
+  defp offsets(:s_shape), do: [{0,1},{0,2},{1,0},{1,1}]
+  defp offsets(:square), do: [{0,0},{0,1},{1,0},{1,1}]
 end
